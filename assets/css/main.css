@@ -1,9 +1,11 @@
+/* line 1, ../_toast.scss */
 body {
   font-family: sans-serif;
 }
 
+/* line 2, ../main.scss */
 body {
-  background-color: red;
+  background-color: green;
   -webkit-animation-name: scale;
           animation-name: scale;
   -webkit-animation-duration: 5s;
