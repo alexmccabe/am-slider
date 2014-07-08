@@ -1,6 +1,7 @@
-// npm install gulp-ruby-sass gulp-autoprefixer gulp-minify-css gulp-jshint gulp-concat gulp-uglify gulp-imagemin gulp-clean gulp-notify gulp-rename gulp-cache gulp-load-plugins --save-dev
-
+// Get gulp started
 var gulp = require('gulp');
+
+// Inject CSS and reload JS on change
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
@@ -8,147 +9,93 @@ var reload = browserSync.reload;
 var gulpLoadPlugins = require('gulp-load-plugins');
 var plugins = gulpLoadPlugins();
 
-// Object to store all file paths
+var plumber = require('gulp-plumber');
+var notify = require('gulp-notify');
+
+// Directories
+var input   = '/dev',
+	output  = '/assets',
+	sassDir = '/sass/',
+	jsDir   = '/js/',
+	imgDir  = '/img/',
+	cssDir  = '/css/';
+
+// Object to store source file locations
 var sources = {
 	sass : {
-		src: './dev/sass/',
-		files: './dev/sass/**/*.scss',
-		dest: './assets/css'
+		src: '.' + input + sassDir,
+		files: '.' + input + sassDir + '**/*.scss',
+		dest: '.' + output + cssDir,
+		map: '../../' + input + sassDir
 	},
 
 	js : {
-		src: './dev/js/',
-		files: ['./dev/js/*.js', './dev/js/**/*.js'],
-		dest: './assets/js'
+		src: '.' + input + jsDir,
+		files: ['.' + input + jsDir + '*.js', '.' + input + jsDir + '**/*.js'],
+		dest: '.' + output + jsDir
 	},
 
 	images : {
-		src: './dev/img/',
-		files: './dev/img/**/*',
-		dest: './assets/img'
+		src: '.' + input + imgDir,
+		files: '.' + input + imgDir + '**/*',
+		dest: '.' + output + imgDir
 	}
 }
 
-// A display error function, to format and make custom errors more uniform
-// Could be combined with gulp-util or npm colors for nicer output
-var displayError = function(error) {
+// Error handling function
+var onError = function (err) {
+	// beep([0, 0, 0]);
+	// gutil.log(gutil.colors.green(err));
 
-	// Initial building up of the error
-	var errorString = '[' + error.plugin + ']';
-	errorString += ' ' + error.message.replace("\n",''); // Removes new line at the end
+	notify({message: 'cheese'});
 
-	// If the error contains the filename or line number add it to the string
-	if(error.fileName)
-	errorString += ' in ' + error.fileName;
+	console.log('error');
+};
 
-	if(error.lineNumber)
-	errorString += ' on line ' + error.lineNumber;
-
-	// This will output an error like the following:
-	// [gulp-sass] error message in file_name on line 1
-	console.error(errorString);
-}
-
+// Utility to log to the console
 gulp.task('log', function() {
-	console.log(sources.js.files[0]);
+	console.log('hi');
 });
 
+// Utility to compile SASS
+// gulp.task('styles', function() {
+// 	return gulp.src(sources.sass.files)
+// 		.pipe(plugins.plumber({
+// 			errorHandler: onError
+// 		}))
+// 		.pipe(
+// 			plugins.rubySass({
+// 				lineNumbers: true,
+// 				style: 'expanded',
+// 				sourcemap: true,
+// 				sourcemapPath: sources.sass.map
+// 			})
+// 		);
+// });
 
-// Compiling the SASS and Compass styles
-gulp.task('styles', function() {
-	return gulp.src(sources.sass.files)
-		// Compile SASS
-		.pipe(plugins.rubySass({
-			lineNumbers: true,
-			style: 'expanded',
-			sourcemap: true,
-			sourcemapPath: '../../dev/sass'
-		}))
+gulp.task('styles', function () {
+  return gulp.src(sources.sass.files)
+    // .pipe(plumber({errorHandler: notify.onError("Error: there was an error")}))
+    .pipe(
+        plugins.rubySass({ style: 'expanded', debugInfo: true, lineNumbers: true })
+    )
+    .on("error", function(err) {
+    	console.log('err.message');
+    })
 
-		// If there is an error, don't stop compiling but use the custom displayError function
-		.on('error', function(err){
-			displayError(err);
-		})
-		.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-		.pipe(gulp.dest(sources.sass.dest))
-
-		// Minify the CSS file
-		.pipe(plugins.rename({suffix: '.min'}))
-		.pipe(plugins.minifyCss())
-		.pipe(gulp.dest(sources.sass.dest))
-		.pipe(reload({stream:true}))
-
-		.pipe(plugins.notify({message: 'Styles task complete'}));
+    .pipe(gulp.dest(sources.sass.dest));
 });
 
 gulp.task('js', function() {
 	gulp.src(sources.js.files[0])
+	.pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
 		.pipe(plugins.jshint())
 		.pipe(plugins.jshint.reporter('default'))
-		.on('error', function(err){
-			displayError(err);
-		});
-
-	gulp.src(sources.js.files[1])
-		.pipe(plugins.uglify())
-		.pipe(plugins.concat('main.js'))
-		.pipe(plugins.rename({suffix: '.min'}))
-		.pipe(gulp.dest(sources.js.dest))
-		.pipe(plugins.notify({message: 'JS task complete'}));;
-});
-
-// Minify the images
-gulp.task('images', function() {
-	return gulp.src(sources.images.files)
-		.pipe(
-			plugins.cache(
-				plugins.imagemin({
-					optimizationLevel: 3,
-					progressive: true,
-					interlaced: true
-				})
-			)
-		)
-		.pipe(gulp.dest(sources.images.dest))
-
-		.pipe(plugins.notify({message: 'Images task complete'}));
-});
-
-// Clean up the folders before we compile everything
-gulp.task('clean', function() {
-	return gulp.src([sources.sass.dest, sources.js.dest, sources.images.dest], {read: false})
-		.pipe(plugins.clean());
+		.pipe(plugins.jshint.reporter('fail'))
 });
 
 
-gulp.task('browsersync', function() {
-	var files = [
-		sources.sass.dest + '/*.css',
-		sources.js.dest + '/*.js',
-		'./*.html'
-	];
+// Gulp install commands
+// npm install gulp --save-dev
 
-	browserSync.init(files, {
-		server: {
-			baseDir: '../js_slider'
-		}
-	});
-});
-
-gulp.task('default', ['clean', 'browsersync'], function() {
-	gulp.start('styles', 'js', 'images');
-
-	gulp.watch(sources.sass.files, ['styles'])
-	.on('change', function(evt) {
-		console.log(
-		'[watcher] File ' + evt.path.replace(/.*(?=sass)/,'') + ' was ' + evt.type + ', compiling...'
-		);
-	});
-
-	gulp.watch(sources.js.files, ['js'])
-	.on('change', function(evt) {
-		console.log(
-		'[watcher] File ' + evt.path.replace(/.*(?=js)/,'') + ' was ' + evt.type + ', compiling...'
-		);
-	});
-});
+// npm install browser-sync gulp-autoprefixer gulp-cache gulp-clean gulp-concat gulp-filter gulp-imagemin gulp-jshint gulp-load-plugins gulp-minify-css gulp-notify gulp-plumber gulp-rename gulp-ruby-sass gulp-uglify --save-dev
