@@ -1,6 +1,8 @@
 // npm install gulp-ruby-sass gulp-autoprefixer gulp-minify-css gulp-jshint gulp-concat gulp-uglify gulp-imagemin gulp-clean gulp-notify gulp-rename gulp-cache gulp-load-plugins --save-dev
 
 var gulp = require('gulp');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
 
 // Auto-loading the plugins
 var gulpLoadPlugins = require('gulp-load-plugins');
@@ -11,7 +13,19 @@ var sources = {
 	sass : {
 		src: './dev/sass/',
 		files: './dev/sass/**/*.scss',
-		dest: 'assets/css'
+		dest: './assets/css'
+	},
+
+	js : {
+		src: './dev/js/',
+		files: ['./dev/js/*.js', './dev/js/**/*.js'],
+		dest: './assets/js'
+	},
+
+	images : {
+		src: './dev/img/',
+		files: './dev/img/**/*',
+		dest: './assets/img'
 	}
 }
 
@@ -34,6 +48,10 @@ var displayError = function(error) {
 	// [gulp-sass] error message in file_name on line 1
 	console.error(errorString);
 }
+
+gulp.task('log', function() {
+	console.log(sources.js.files[0]);
+});
 
 
 // Compiling the SASS and Compass styles
@@ -58,10 +76,79 @@ gulp.task('styles', function() {
 		.pipe(plugins.rename({suffix: '.min'}))
 		.pipe(plugins.minifyCss())
 		.pipe(gulp.dest(sources.sass.dest))
+		.pipe(reload({stream:true}))
 
 		.pipe(plugins.notify({message: 'Styles task complete'}));
 });
 
-gulp.task('default', function() {
-	console.log(sources.sass.dest);
+gulp.task('js', function() {
+	gulp.src(sources.js.files[0])
+		.pipe(plugins.jshint())
+		.pipe(plugins.jshint.reporter('default'))
+		.on('error', function(err){
+			displayError(err);
+		});
+
+	gulp.src(sources.js.files[1])
+		.pipe(plugins.uglify())
+		.pipe(plugins.concat('main.js'))
+		.pipe(plugins.rename({suffix: '.min'}))
+		.pipe(gulp.dest(sources.js.dest))
+		.pipe(plugins.notify({message: 'JS task complete'}));;
+});
+
+// Minify the images
+gulp.task('images', function() {
+	return gulp.src(sources.images.files)
+		.pipe(
+			plugins.cache(
+				plugins.imagemin({
+					optimizationLevel: 3,
+					progressive: true,
+					interlaced: true
+				})
+			)
+		)
+		.pipe(gulp.dest(sources.images.dest))
+
+		.pipe(plugins.notify({message: 'Images task complete'}));
+});
+
+// Clean up the folders before we compile everything
+gulp.task('clean', function() {
+	return gulp.src([sources.sass.dest, sources.js.dest, sources.images.dest], {read: false})
+		.pipe(plugins.clean());
+});
+
+
+gulp.task('browsersync', function() {
+	var files = [
+		sources.sass.dest + '/*.css',
+		sources.js.dest + '/*.js',
+		'./*.html'
+	];
+
+	browserSync.init(files, {
+		server: {
+			baseDir: '../js_slider'
+		}
+	});
+});
+
+gulp.task('default', ['clean', 'browsersync'], function() {
+	gulp.start('styles', 'js', 'images');
+
+	gulp.watch(sources.sass.files, ['styles'])
+	.on('change', function(evt) {
+		console.log(
+		'[watcher] File ' + evt.path.replace(/.*(?=sass)/,'') + ' was ' + evt.type + ', compiling...'
+		);
+	});
+
+	gulp.watch(sources.js.files, ['js'])
+	.on('change', function(evt) {
+		console.log(
+		'[watcher] File ' + evt.path.replace(/.*(?=js)/,'') + ' was ' + evt.type + ', compiling...'
+		);
+	});
 });
