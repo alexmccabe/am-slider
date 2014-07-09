@@ -14,7 +14,7 @@ var notify = require('gulp-notify');
 var gutil = require('gulp-util');
 
 // Directories
-var input   = '/dev',
+var input   = 'dev',
 	output  = '/assets',
 	sassDir = '/sass/',
 	jsDir   = '/js/',
@@ -25,7 +25,7 @@ var input   = '/dev',
 var sources = {
 	sass : {
 		src: '.' + input + sassDir,
-		files: '.' + input + sassDir + '**/*.scss',
+		files: input + sassDir + '**/*.scss',
 		dest: '.' + output + cssDir,
 		map: './' + input + sassDir
 	},
@@ -58,12 +58,13 @@ gulp.task('log', function() {
 gulp.task('styles', function() {
 	return gulp.src(sources.sass.files)
 		.pipe(plugins.plumber({
-			errorHandler: onError
+			errorHandler: notify.onError("Error: <%= error.message %>")
 		}))
 
 		.pipe(
 			plugins.rubySass({
 				lineNumbers: true,
+				loadPath: sources.sass.files,
 				style: 'expanded',
 				sourcemap: true,
 				sourcemapPath: sources.sass.map

@@ -1,31 +1,5 @@
-@import 'toast';
-body {
-	background-color: purple;
-	animation-name: scale;
-	animation-duration: 0.5s;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-}
-
-ul {
-	list-style-type: none;
-
-	li {
-		float: left;
-		width: 50%;
-
-		img { width: 100%; display: block; }
-	}
-}
-
-// @keyframes scale {
-// 	from {
-// 		transform: scale(1.5);
-// 	}
-
-// 	to {
-// 		transform: scale(0.2);
-// 	}
-// }
+@import "reset";
+@import "slider";
+@import "test";
 
 /*# sourceMappingURL=main.css.map */
