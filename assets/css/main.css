@@ -112,4 +112,9 @@ input, select {
   vertical-align: middle;
 }
 
+/* line 1, ../_slider.scss */
+.slider {
+  background-color: red;
+}
+
 /*# sourceMappingURL=main.css.map */

@@ -56,7 +56,9 @@ gulp.task('log', function() {
 
 // Utility to compile SASS
 gulp.task('styles', function() {
-	return gulp.src(sources.sass.files)
+	// console.log(sources.sass.files);
+
+	return gulp.src('./' + sources.sass.files)
 		.pipe(plugins.plumber({
 			errorHandler: notify.onError("Error: <%= error.message %>")
 		}))
@@ -64,7 +66,7 @@ gulp.task('styles', function() {
 		.pipe(
 			plugins.rubySass({
 				lineNumbers: true,
-				loadPath: sources.sass.files,
+				// loadPath: sources.sass.files,
 				style: 'expanded',
 				sourcemap: true,
 				sourcemapPath: sources.sass.map
