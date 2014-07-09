@@ -157,6 +157,14 @@ gulp.task('default', ['clean'], function() {
 		'[watcher] File ' + evt.path.replace(/.*\/(?=js)/,'') + ' was ' + evt.type + ', compiling...'
 		);
 	});
+
+	gulp.watch('*.html')
+	.on('change', function(evt) {
+		console.log(evt);
+		console.log(
+		'[watcher] File ' + evt.path.replace(/.*\/(?=html)/,'') + ' was ' + evt.type + ', compiling...'
+		);
+	});
 });
 
 
