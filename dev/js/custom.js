@@ -57,7 +57,9 @@
 				self.next();
 			});
 
-			$('.am-tab').click(function() {
+			$('.am-tab').click(function(event) {
+				event.preventDefault();
+
 				if(self.isAnimating === false && self.current !== $(this).index()) {
 					self.animatingTo = $(this).index();
 					self.pause();
