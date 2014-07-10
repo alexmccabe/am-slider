@@ -33,13 +33,30 @@
 
 		this.initEvents = function() {
 			var self = this;
-			self.play();
-			/*setTimeout(self.next.bind(self), self.options.slideDuration);*/
+			self.slides.css('transition-duration', self.options.animDuration/1000 + 's');
 
-			self.slideContainer.hover(function() {
+			self.play();
+
+			if(self.options.pauseOnHover === true) {
+				self.el.hover(function() {
+					self.pause();
+				}, function() {
+					self.play();
+				});
+			}
+
+			$('.am-prev').click(function(event) {
+				event.preventDefault();
+
 				self.pause();
-			}, function() {
-				self.play();
+				self.prev();
+			});
+
+			$('.am-next').click(function(event) {
+				event.preventDefault();
+
+				self.pause();
+				self.next();
 			});
 
 		};
@@ -58,7 +75,8 @@
 			var self = this;
 			var prev = self.current-1;
 
-			self.animatingTo = (prev < self.numSlides) ? self.numSlides : prev;
+			self.animatingTo = (prev < 0) ? self.numSlides - 1 : prev;
+
 			self.animate();
 			self.current = self.animatingTo;
 		};
@@ -75,11 +93,17 @@
 
 		this.animate = function() {
 			var self = this;
-			self.isAnimating = true;
+			if(self.isAnimating === false) {
+				console.log('current:' + self.current + 'next:'+ self.animatingTo);
+				self.slides.eq(self.current).removeClass('am-current');
+				self.slides.eq(self.animatingTo).addClass('am-current');
 
-			console.log('current:' + self.current + 'next:'+ self.animatingTo);
-			self.slides.eq(self.current).removeClass('am-current');
-			self.slides.eq(self.animatingTo).addClass('am-current');
+				self.isAnimating = true;
+			}
+
+			$(self.options.slideContainer + ' ' + self.options.slideElement).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+				self.isAnimating = false;
+			});
 		};
 
 		this.init(element, options);
@@ -100,7 +124,12 @@
 	}
 
 	function appendDirectionControls(element, options) {
+		if(options.directionControls === true && $('.am-direction-controls').length === 0) {
 
+			var dirControlsScaffold = '<ul class="am-direction-controls"><li class="am-prev"><a href="#">' + options.directionContolsText.prev + '</a></li><li class="am-next"><a href="#">' + options.directionContolsText.next + '</a></li></ul>';
+
+			$(element).append(dirControlsScaffold);
+		}
 	}
 
 	// Slider default options
@@ -110,6 +139,10 @@
 		slideDuration: 5000, // Length each slide is active for
 		animDuration: 1000, // Duration of animation between slides
 		directionControls: true, // prev/next controls
+		directionContolsText: {
+			prev: 'prev',
+			next: 'next'
+		},
 		navControls: true, // Navigation controls to flick through slides
 		navControlsClass: '', // Class of navigation controls container
 		pauseOnHover: false // Pause the slider animations on hover
@@ -118,7 +151,7 @@
 
 
 $('.am-slider').slider({
-	// sliderNav: '.slider-nav'
+	pauseOnHover : true
 });
 
 
