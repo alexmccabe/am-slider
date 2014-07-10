@@ -58,7 +58,7 @@
 			});
 
 			$('.am-tab').click(function() {
-				if(self.isAnimating === false) {
+				if(self.isAnimating === false && self.current !== $(this).index()) {
 					self.animatingTo = $(this).index();
 					self.pause();
 					self.animate();
@@ -107,7 +107,7 @@
 		this.animate = function() {
 			var self = this;
 			if(self.isAnimating === false) {
-				/*console.log('current:' + self.current + 'next:'+ self.animatingTo);*/
+				console.log('current:' + self.current + 'next:'+ self.animatingTo);
 				self.slides.eq(self.current).removeClass('am-current');
 				self.slides.eq(self.animatingTo).addClass('am-current');
 
