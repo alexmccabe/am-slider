@@ -1,0 +1,40 @@
+ul { list-style-type: none; }
+.slides {
+	// background-color: red;
+	margin: 0 auto;
+	position: relative;
+	width: 50%;
+
+	&:hover .slider-nav { opacity: 1; }
+
+	& > li {
+		display: none;
+		width: 100%;
+
+		&.am-current {
+			display: block;
+		}
+	}
+
+	img {
+		display: block;
+		width: 100%;
+	}
+
+	.slider-nav {
+		left: 50%;
+		opacity: 0;
+		position: absolute;
+		text-align: center;
+		top: 100%;
+		transform: translate(-50%, -100%);
+		transition: all 0.5s;
+		z-index: 10;
+
+		li {
+			background-color: white;
+			display: inline-block;
+			padding: 5px;
+		}
+	}
+}
