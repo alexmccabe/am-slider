@@ -23,10 +23,8 @@
 			self.slides.eq(self.current).addClass('am-current');
 			self.setInterval = null;
 
-			// console.log($(self).index());
-
-			appendNavControls(element, self.options);
-			appendDirectionControls(element, self.options);
+			if(self.options.navControls) appendNavControls(element, self.options);
+			if(self.options.directionControls) appendDirectionControls(element, self.options);
 
 			this.initEvents();
 		};
@@ -59,26 +57,41 @@
 				self.next();
 			});
 
+			$('.am-tab').click(function() {
+				if(self.isAnimating === false) {
+					self.animatingTo = $(this).index();
+					self.pause();
+					self.animate();
+					self.current = self.animatingTo;
+				}
+			});
+
 		};
 
 		this.next = function() {
 			var self = this;
-			var next = self.current+1;
 
-			self.animatingTo = (next > self.numSlides - 1) ? 0 : next;
-			self.animate();
+			if(self.isAnimating === false) {
+				var next = self.current+1;
 
-			self.current = self.animatingTo;
+				self.animatingTo = (next > self.numSlides - 1) ? 0 : next;
+				self.animate();
+
+				self.current = self.animatingTo;
+			}
 		};
 
 		this.prev = function() {
 			var self = this;
-			var prev = self.current-1;
 
-			self.animatingTo = (prev < 0) ? self.numSlides - 1 : prev;
+			if(self.isAnimating === false) {
+				var prev = self.current-1;
 
-			self.animate();
-			self.current = self.animatingTo;
+				self.animatingTo = (prev < 0) ? self.numSlides - 1 : prev;
+
+				self.animate();
+				self.current = self.animatingTo;
+			}
 		};
 
 		this.pause = function() {
@@ -94,16 +107,19 @@
 		this.animate = function() {
 			var self = this;
 			if(self.isAnimating === false) {
-				console.log('current:' + self.current + 'next:'+ self.animatingTo);
+				/*console.log('current:' + self.current + 'next:'+ self.animatingTo);*/
 				self.slides.eq(self.current).removeClass('am-current');
 				self.slides.eq(self.animatingTo).addClass('am-current');
 
 				self.isAnimating = true;
-			}
 
-			$(self.options.slideContainer + ' ' + self.options.slideElement).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
-				self.isAnimating = false;
-			});
+				$(self.slides.eq(self.current), self.slides.eq(self.animatingTo)).on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
+					/*console.log(e.target);*/
+					self.isAnimating = false;
+				});
+
+				/*setTimeout(function() { self.isAnimating = false; }, self.options.animDuration);*/
+			}
 		};
 
 		this.init(element, options);
@@ -117,18 +133,27 @@
 
 
 	// Private functions
-
-
-	function appendNavControls(element, options) {
-
-	}
-
 	function appendDirectionControls(element, options) {
 		if(options.directionControls === true && $('.am-direction-controls').length === 0) {
 
 			var dirControlsScaffold = '<ul class="am-direction-controls"><li class="am-prev"><a href="#">' + options.directionContolsText.prev + '</a></li><li class="am-next"><a href="#">' + options.directionContolsText.next + '</a></li></ul>';
 
 			$(element).append(dirControlsScaffold);
+		}
+	}
+
+	function appendNavControls(element, options) {
+		if(options.navControlsClass === '' && $('.am-nav-controls').length === 0) {
+			var navControlsScaffold = '<ul class="am-nav-controls">';
+			var numSlides = $(options.slideContainer).find(options.slideElement).length;
+
+			for (var i = 1; i < numSlides + 1; i++) {
+				navControlsScaffold += '<li class="am-tab"><a href="#">' + i + '</a></li>';
+			}
+
+			navControlsScaffold += '</ul>';
+
+			$(element).append(navControlsScaffold);
 		}
 	}
 
@@ -151,7 +176,8 @@
 
 
 $('.am-slider').slider({
-	pauseOnHover : true
+	pauseOnHover : true,
+	directionControls : true
 });
 
 

@@ -118,42 +118,66 @@ ul {
 }
 
 /* line 2, ../_slider.scss */
+a {
+  text-decoration: none;
+}
+
+/* line 3, ../_slider.scss */
 .am-slider {
   margin: 0 auto;
   position: relative;
   width: 50%;
 }
-/* line 7, ../_slider.scss */
-.am-slider .slides, .am-slider .am-direction-controls {
+/* line 8, ../_slider.scss */
+.am-slider .slides, .am-slider .am-direction-controls, .am-slider .am-nav-controls {
   clear: both;
   margin: 0;
   padding: 0;
 }
-/* line 13, ../_slider.scss */
-.am-slider .am-direction-controls {
+/* line 14, ../_slider.scss */
+.am-slider .am-direction-controls, .am-slider .am-nav-controls {
   /* position: relative; */
   z-index: 3;
 }
-/* line 19, ../_slider.scss */
+/* line 20, ../_slider.scss */
 .am-slider .am-direction-controls li a {
   background-color: red;
   position: absolute;
   top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
-/* line 25, ../_slider.scss */
+/* line 27, ../_slider.scss */
 .am-slider .am-direction-controls li.am-prev a {
   left: 0;
 }
-/* line 29, ../_slider.scss */
+/* line 31, ../_slider.scss */
 .am-slider .am-direction-controls li.am-next a {
   right: 0;
 }
+/* line 36, ../_slider.scss */
+.am-slider .am-nav-controls {
+  bottom: 0;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+/* line 43, ../_slider.scss */
+.am-slider .am-nav-controls .am-tab {
+  display: inline-block;
+  background-color: white;
+  padding: 5px;
+}
 
-/* line 38, ../_slider.scss */
+/* line 53, ../_slider.scss */
 .slides:hover .slider-nav {
   opacity: 1;
 }
-/* line 40, ../_slider.scss */
+/* line 55, ../_slider.scss */
 .slides > li {
   /* display: none; */
   float: left;
@@ -166,19 +190,19 @@ ul {
   -webkit-transition-property: all;
           transition-property: all;
 }
-/* line 51, ../_slider.scss */
+/* line 66, ../_slider.scss */
 .slides > li.am-current {
   /* display: list-item; */
   opacity: 1;
   visibility: visible;
   z-index: 2;
 }
-/* line 59, ../_slider.scss */
+/* line 74, ../_slider.scss */
 .slides img {
   display: block;
   width: 100%;
 }
-/* line 64, ../_slider.scss */
+/* line 79, ../_slider.scss */
 .slides .slider-nav {
   left: 50%;
   opacity: 0;
@@ -192,7 +216,7 @@ ul {
           transition: all 0.5s;
   z-index: 10;
 }
-/* line 74, ../_slider.scss */
+/* line 89, ../_slider.scss */
 .slides .slider-nav li {
   background-color: white;
   display: inline-block;
