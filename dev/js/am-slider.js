@@ -20,13 +20,11 @@
 			self.setInterval = null; // Interval between slides
 
 			// Detecting CSS transition support
-			self.transitionSupport = 'false';
+			self.transitionSupport = false;
 			self.domPrefixes = 'webkit Webkit Moz O ms Khtml'.split(' ');
 
-			if(checkTransitionSupport(self.domPrefixes)) self.transitionSupport = 'true';
-			// console.log(self.transitionSupport);
-
-			$('body').append(self.transitionSupport);
+			if(checkTransitionSupport(self.domPrefixes)) self.transitionSupport = true;
+			console.log(self.transitionSupport);
 
 			// Append the extra items needed
 			if(options.directionControls) appendDirectionControls(element, options);
@@ -152,23 +150,34 @@
 		this.animate = function() {
 			var self = this;
 
-			if(!self.isAnimating) {
-				console.log('current:' + self.current + 'next:'+ self.animatingTo);
-				self.slides.eq(self.current).removeClass('am-current');
-				self.slides.eq(self.animatingTo).addClass('am-current');
+			if(self.options.cssTransitions && self.transitionSupport) {
+				// If CSS transitions are wanted AND the browser supports them
+				if(!self.isAnimating) {
+					console.log('current:' + self.current + 'next:'+ self.animatingTo);
+					self.slides.eq(self.current).removeClass('am-current');
+					self.slides.eq(self.animatingTo).addClass('am-current');
 
-				$('.am-tab').eq(self.current).removeClass('am-tab-current');
-				$('.am-tab').eq(self.animatingTo).addClass('am-tab-current');
+					$('.am-tab').eq(self.current).removeClass('am-tab-current');
+					$('.am-tab').eq(self.animatingTo).addClass('am-tab-current');
+
+					self.isAnimating = true;
+
+					// Check for CSS animation completion
+					$(self.slides.eq(self.current), self.slides.eq(self.animatingTo)).on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
+						self.isAnimating = false;
+					});
+				}
+			} else {
+				// We do the old school JS animations instead
+
+				// Old school way of preventing more than one animation at once
+
+				// self.slides.eq(self.current).fadeOut(self.options.animDuration);
+				self.slides.eq(self.animatingTo).fadeIn(self.options.animDuration);
 
 				self.isAnimating = true;
 
-				// Check for CSS animation completion
-				$(self.slides.eq(self.current), self.slides.eq(self.animatingTo)).on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
-					self.isAnimating = false;
-				});
-
-				// Old school way of preventing more than one animation at once
-				// setTimeout(function() { self.isAnimating = false; }, self.options.animDuration);
+				setTimeout(function() { self.isAnimating = false; }, self.options.animDuration);
 			}
 		};
 
@@ -218,22 +227,21 @@
 		if(typeof(window.Modernizr) !== 'undefined') {
 			if(Modernizr.csstransitions) { return true; }
 		} else {
-
+			// From http://stackoverflow.com/questions/7264899/detect-css-transitions-using-javascript-and-without-modernizr
 
 			var docBody = document.body || document.documentElement,
-			style = docBody.style,
-			property = 'transition';
+				style = docBody.style,
+				property = 'transition';
 
+			// Test for W3C support
 			if (typeof style[property] == 'string') { return true; }
 
-			// Tests for vendor specific prop
-			// var vendors = vendors;
+			// Tests for vendor specific support
 			property = property.charAt(0).toUpperCase() + property.substr(1);
 
 			for (var i=0; i < vendors.length; i++) {
-			if (typeof style[vendors[i] + property] == 'string') { return true; }
+				if (typeof style[vendors[i] + property] == 'string') { return true; }
 			}
-
 			return false;
 		}
 	}
@@ -259,8 +267,9 @@
 
 
 $('.am-slider').slider({
-	autoPlay : false,
-	pauseOnHover : true,
+	autoPlay : true,
+	cssTransitions: false,
+	pauseOnHover : false,
 	directionControls : true,
 	// navControlsClass : '.toast'
 });
