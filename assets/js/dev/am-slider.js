@@ -20,11 +20,13 @@
 			self.setInterval = null; // Interval between slides
 
 			// Detecting CSS transition support
-			self.transitionSupport = false;
-			self.domPrefixes = 'Webkit Moz O ms Khtml'.split(' ');
+			self.transitionSupport = 'false';
+			self.domPrefixes = 'webkit Webkit Moz O ms Khtml'.split(' ');
 
-			if(checkTransitionSupport()) self.transitionSupport = true;
-			console.log(self.transitionSupport);
+			if(checkTransitionSupport(self.domPrefixes)) self.transitionSupport = 'true';
+			// console.log(self.transitionSupport);
+
+			$('body').append(self.transitionSupport);
 
 			// Append the extra items needed
 			if(options.directionControls) appendDirectionControls(element, options);
@@ -81,7 +83,7 @@
 				event.preventDefault();
 				if(!self.options.autoPlay) {
 					self.play();
-				}
+				} else { console.log('already playing'); }
 			});
 
 		};
@@ -96,6 +98,8 @@
 				self.animate();
 
 				self.current = self.animatingTo;
+
+				console.log('next');
 			}
 		};
 
@@ -109,6 +113,7 @@
 
 				self.animate();
 				self.current = self.animatingTo;
+				console.log('prev');
 			}
 		};
 
@@ -121,6 +126,8 @@
 					self.animatingTo = slideNum;
 					self.animate();
 					self.current = self.animatingTo;
+
+					console.log('jumping to slide:' + self.animatingTo);
 				}
 			}
 		};
@@ -129,6 +136,8 @@
 			var self = this;
 			clearInterval(self.setInterval);
 			self.options.autoPlay = false;
+
+			console.log('paused');
 		};
 
 		this.play = function() {
@@ -136,6 +145,8 @@
 
 			self.setInterval = setInterval(self.next.bind(self), self.options.slideDuration);
 			self.options.autoPlay = true;
+
+			console.log('playing');
 		};
 
 		this.animate = function() {
@@ -202,14 +213,29 @@
 		}
 	}
 
-	function checkTransitionSupport(element, options) {
+	function checkTransitionSupport(vendors) {
+		// We may be lucky and already have Modernizr
 		if(typeof(window.Modernizr) !== 'undefined') {
 			if(Modernizr.csstransitions) { return true; }
 		} else {
 
-		}
 
-		return false;
+			var docBody = document.body || document.documentElement,
+			style = docBody.style,
+			property = 'transition';
+
+			if (typeof style[property] == 'string') { return true; }
+
+			// Tests for vendor specific prop
+			// var vendors = vendors;
+			property = property.charAt(0).toUpperCase() + property.substr(1);
+
+			for (var i=0; i < vendors.length; i++) {
+			if (typeof style[vendors[i] + property] == 'string') { return true; }
+			}
+
+			return false;
+		}
 	}
 
 	// Slider default options
@@ -233,7 +259,7 @@
 
 
 $('.am-slider').slider({
-	autoPlay : true,
+	autoPlay : false,
 	pauseOnHover : true,
 	directionControls : true,
 	// navControlsClass : '.toast'
