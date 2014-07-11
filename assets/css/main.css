@@ -113,10 +113,6 @@ input, select {
 }
 
 /* line 1, ../_slider.scss */
-<<<<<<< HEAD
-.slider {
-  background-color: red;
-=======
 ul {
   list-style-type: none;
 }
@@ -225,7 +221,6 @@ a {
   background-color: white;
   display: inline-block;
   padding: 5px;
->>>>>>> styles
 }
 
 /*# sourceMappingURL=main.css.map */

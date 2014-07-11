@@ -23,11 +23,8 @@
 			self.transitionSupport = false;
 			self.domPrefixes = 'Webkit Moz O ms Khtml'.split(' ');
 
-
 			if(checkTransitionSupport()) self.transitionSupport = true;
-
-			console.log(self.transition);
-
+			console.log(self.transitionSupport);
 
 			// Append the extra items needed
 			if(options.directionControls) appendDirectionControls(element, options);
