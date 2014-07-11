@@ -267,9 +267,9 @@
 
 
 $('.am-slider').slider({
-	autoPlay : true,
-	cssTransitions: false,
+	autoPlay : false,
+	cssTransitions: true,
 	pauseOnHover : false,
 	directionControls : true,
-	// navControlsClass : '.toast'
+	navControlsClass : '.toast'
 });
