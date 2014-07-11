@@ -97,8 +97,9 @@ gulp.task('js', function() {
 
 	gulp.src([sources.js.files[1], sources.js.files[0]])
 		.pipe(plumber())
-		// .pipe(plugins.uglify())
-		// .pipe(plugins.concat('main.js'))
+		.pipe(gulp.dest(sources.js.dest + 'dev'))
+		.pipe(plugins.uglify())
+		.pipe(plugins.concat('main.js'))
 		.pipe(plugins.rename({suffix: '.min'}))
 		.pipe(gulp.dest(sources.js.dest))
 		.pipe(reload({stream:true, once: true}));
