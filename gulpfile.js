@@ -24,21 +24,21 @@ var input   = 'dev',
 // Object to store source file locations
 var sources = {
 	sass : {
-		src: '.' + input + sassDir,
+		src: './' + input + sassDir,
 		files: input + sassDir + '**/*.scss',
 		dest: '.' + output + cssDir,
 		map: './' + input + sassDir
 	},
 
 	js : {
-		src: '.' + input + jsDir,
-		files: ['.' + input + jsDir + '*.js', '.' + input + jsDir + '**/*.js'],
+		src: './' + input + jsDir,
+		files: ['./' + input + jsDir + '*.js', './' + input + jsDir + 'vendor/*.js'],
 		dest: '.' + output + jsDir
 	},
 
 	images : {
-		src: '.' + input + imgDir,
-		files: '.' + input + imgDir + '**/*',
+		src: './' + input + imgDir,
+		files: './' + input + imgDir + '**/*',
 		dest: '.' + output + imgDir
 	}
 }
@@ -97,8 +97,9 @@ gulp.task('js', function() {
 		.pipe(plugins.jshint.reporter('jshint-stylish', { verbose: true }))
 		.pipe(plugins.jshint.reporter('fail'));
 
-	gulp.src(sources.js.files[1])
+	gulp.src([sources.js.files[1], sources.js.files[0]])
 		.pipe(plumber())
+		.pipe(gulp.dest(sources.js.dest + 'dev'))
 		.pipe(plugins.uglify())
 		.pipe(plugins.concat('main.js'))
 		.pipe(plugins.rename({suffix: '.min'}))
