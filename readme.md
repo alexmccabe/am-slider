@@ -94,7 +94,8 @@ If you want to operate the slider outside the bounds of the slider itself, you m
 ```javascript
 var slider = $('.am-slider').amSlider({
 	// Pass any options that you wish
-});```
+});
+```
 
 Now you can access one of the methods from the slider. For example moving to the next slide.
 
