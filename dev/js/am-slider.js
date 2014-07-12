@@ -9,6 +9,12 @@
 
 
 		// Public functions
+		/**
+		 * Initialise the plugin
+		 * @param  {string} element
+		 * @param  {object} options
+		 * @return {n/a}
+		 */
 		this.init = function(element, options) {
 			var self = this;
 			console.log(self);
