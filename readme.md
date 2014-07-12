@@ -10,6 +10,7 @@ _There are a couple issues that I am working to fix_
 ###Features
 
 + Modernizr support. If `window.Modernizr` exists it will check for support of CSS transitions
++ CSS transitions checking if Mordernizr is not available
 + Custom slider paging tabs. If you provide a class for the `navControlsClass`, tabs will not be automatically generated
 + Pause the slider on hover
 + Externally accessible methods for controlling the slider
@@ -19,6 +20,7 @@ _There are a couple issues that I am working to fix_
 
 + Video support
 + Other transitions (slide)
++ Loading different images for each slide based on browser width
 
 ##Using the slider
 
