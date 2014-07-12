@@ -1,14 +1,18 @@
 ;(function ( $ ) {
 	'use strict';
 
-	$.slider = function( element, options ) {
+	$.amSlider = function( element, options ) {
 		this.options = {};
 		this.el = $(element);
+
+		this.el.data('slider', this);
+
 
 		// Public functions
 		this.init = function(element, options) {
 			var self = this;
-			self.options = $.extend({}, $.slider.defaultOptions, options);
+			console.log(self);
+			self.options = $.extend({}, $.amSlider.defaultOptions, options);
 			options = self.options;
 
 			// Base variables needed to run the slider
@@ -24,7 +28,7 @@
 			self.domPrefixes = 'webkit Webkit Moz O ms Khtml'.split(' ');
 
 			if(checkTransitionSupport(self.domPrefixes)) self.transitionSupport = true;
-			console.log(self.transitionSupport);
+			// console.log(self.transitionSupport);
 
 			// Append the extra items needed
 			if(options.directionControls) appendDirectionControls(element, options);
@@ -88,6 +92,7 @@
 
 		this.next = function() {
 			var self = this;
+			// console.log('hi');
 
 			if(!self.isAnimating) {
 				var next = self.current+1;
@@ -185,9 +190,9 @@
 	};
 
 	// Lets get this show on the road
-	$.fn.slider = function( options ) {
+	$.fn.amSlider = function( options ) {
 		return this.each(function() {
-			(new $.slider($(this), options));
+			(new $.amSlider($(this), options));
 		});
 	};
 
@@ -247,7 +252,7 @@
 	}
 
 	// Slider default options
-	$.slider.defaultOptions = {
+	$.amSlider.defaultOptions = {
 		animDuration: 1000, // Duration of animation between slides
 		autoPlay: true,	// Autoplay the slider on page load
 		cssTransitions: false, // Use CSS for the transitions
@@ -266,10 +271,15 @@
 }( jQuery ));
 
 
-$('.am-slider').slider({
-	autoPlay : false,
+var something = $('.am-slider').amSlider({
+// 	autoPlay : false,
 	cssTransitions: true,
-	pauseOnHover : false,
-	directionControls : true,
-	navControlsClass : '.toast'
+// 	pauseOnHover : false,
+// 	directionControls : true,
+// 	navControlsClass : '.toast'
+});
+
+
+$('.clicknext').click(function() {
+	something.data('amSlider').next();
 });
