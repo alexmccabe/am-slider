@@ -255,7 +255,7 @@
 	$.amSlider.defaultOptions = {
 		animDuration: 1000, // Duration of animation between slides
 		autoPlay: true,	// Autoplay the slider on page load
-		cssTransitions: false, // Use CSS for the transitions
+		cssTransitions: true, // Use CSS for the transitions
 		directionControls: true, // prev/next controls
 		directionContolsText: { // The text showin the prev/next buttons on the slider
 			prev: 'prev',
