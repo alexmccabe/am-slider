@@ -87,3 +87,26 @@ $('.am-slider').amSlider({
 	}
 });
 ```
+
+####External Calls
+If you want to operate the slider outside the bounds of the slider itself, you must first call the slider and assign it to a variable.
+
+```javascript
+var slider = $('.am-slider').amSlider({
+	// Pass any options that you wish
+});```
+
+Now you can access one of the methods from the slider. For example moving to the next slide.
+
+```javascript
+$('.clickNext').click(function() {
+	slider.data('amSlider').next();
+});
+```
+
+Available methods:
+.next() 	// Go to next slide
+.prev() 	// Go to previous slide
+.slide(4) 	// Jump to a specific slide number
+.pause() 	// Pause auto-cycling of the slides
+.play() 	// Start auto-cycling of the slides
