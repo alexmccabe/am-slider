@@ -5,7 +5,7 @@
 		this.options = {};
 		this.el = $(element);
 
-		this.el.data('slider', this);
+		this.el.data('amSlider', this);
 
 
 		// Public functions
