@@ -106,8 +106,11 @@ $('.clickNext').click(function() {
 ```
 
 Available methods:
+
+```
 .next() 	// Go to next slide
 .prev() 	// Go to previous slide
 .slide(4) 	// Jump to a specific slide number
 .pause() 	// Pause auto-cycling of the slides
 .play() 	// Start auto-cycling of the slides
+```
