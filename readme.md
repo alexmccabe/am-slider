@@ -15,6 +15,7 @@ A simple JS slider (he says, when all it does is fade at the moment...).
 + Other transitions (slide)
 + Loading different images for each slide based on browser width
 + Touch support
++ Multiple sliders on a single page
 
 ##Using the slider
 
