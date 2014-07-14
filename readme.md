@@ -1,12 +1,5 @@
 A simple JS slider (he says, when all it does is fade at the moment...).
 
-###Issues
-_There are a couple issues that I am working to fix_
-
-+ A bug where `autoPlay` is set to `false` and then the slide is set to cycle manually (by clicking a link for example), then choosing to cycle a slide. This will stop the cycling of slides.
-+ A bug where jQuery animations do not work
-+ A bug where playing the slider from an external call decreases time between slides if done more than once
-
 ###Features
 
 + Modernizr support. If `window.Modernizr` exists it will check for support of CSS transitions
@@ -21,6 +14,7 @@ _There are a couple issues that I am working to fix_
 + Video support
 + Other transitions (slide)
 + Loading different images for each slide based on browser width
++ Touch support
 
 ##Using the slider
 
@@ -112,7 +106,7 @@ Available methods:
 ```
 .next() 	// Go to next slide
 .prev() 	// Go to previous slide
-.slide(4) 	// Jump to a specific slide number
+.slide(n) 	// Jump to a specific slide number
 .pause() 	// Pause auto-cycling of the slides
 .play() 	// Start auto-cycling of the slides
 ```
