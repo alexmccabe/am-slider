@@ -1,9 +1,5 @@
-ul { list-style-type: none; }
-a { text-decoration: none; }
 .am-slider {
-	margin: 0 auto;
 	position: relative;
-	width: 50%;
 
 	.slides, .am-direction-controls, .am-nav-controls {
 		clear:both;
@@ -18,10 +14,14 @@ a { text-decoration: none; }
 
 	.am-direction-controls li {
 		a {
-			background-color: red;
+			background-color: white;
+			display: block;
+			padding: 3em 0.2em;
 			position: absolute;
 			top:50%;
-			transform: translateY(-50%);
+			transform: translateY(-50%) translate3d(0,0,0);
+
+			&:hover { background-color: darken(white, 5%); }
 		}
 
 		&.am-prev a {
@@ -34,36 +34,37 @@ a { text-decoration: none; }
 	}
 
 	.am-nav-controls {
-		bottom: 0;
-		left: 50%;
-		position: absolute;
+		bottom: 1.4em;
+		position: relative;
 		text-align: center;
-		transform: translateX(-50%);
+		// transform: translateX(-50%) translate3d(0,0,0);
 
 		.am-tab {
 			display: inline-block;
+		}
+
+		a {
 			background-color: white;
-			padding: 5px;
+			margin: 0 -1px;
+			padding: 0.4em 1em;
+
+			&:hover { background-color: darken(white, 5%); }
+		}
+
+		.am-tab-current a {
+			background-color: darken(white, 50%);
+			color: white;
 		}
 	}
 }
 .slides {
-	// background-color: red;
-
-	&:hover .slider-nav { opacity: 1; }
-
 	& > li {
-		/* display: none; */
 		float: left;
 		margin-right: -100%;
-		/* position: absolute; */
 		width: 100%;
 		z-index: 1;
 
 		&.am-current {
-			/* display: list-item; */
-			opacity: 1;
-			visibility: visible;
 			z-index: 2;
 		}
 	}

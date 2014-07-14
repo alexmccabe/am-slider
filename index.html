@@ -8,42 +8,67 @@
 
 </head>
 <body>
-	<header>
-		<h1>JS Slider</h1>
-	</header>
+	<div class="slider-wrap demos">
+		<h2 class="demo-title">Demo 1</h2>
+		<h3>Basic Slider</h3>
 
-	<div class="am-slider">
-		<ul class="slides">
-			<li class="slide">
-				<img src="assets/img/defence_2.jpg" alt="">
-			</li>
-			<li class="slide">
-				<img src="assets/img/emergency_cc_1.jpg" alt="">
-			</li>
-			<li class="slide">
-				<img src="assets/img/engineering_1.jpg" alt="">
-			</li>
-			<li class="slide">
-				<img src="assets/img/financial_1.jpg" alt="">
-			</li>
-			<li class="slide">
-				<img src="assets/img/med_ent_1.jpg" alt="">
-			</li>
-			<li class="slide"><img src="http://placekitten.com/940/360" alt=""></li>
-		</ul>
-		<ul class="toast">
-			<li><a href="#">Slide 1</a></li>
-			<li><a href="#">Slide 2</a></li>
-			<li><a href="#">Slide 3</a></li>
-			<li><a href="#">Slide 4</a></li>
-			<li><a href="#">Slide 5</a></li>
-		</ul>
+		<div class="am-slider slider-1">
+			<ul class="slides">
+				<li class="slide">
+					<img src="assets/img/defence_2.jpg" alt="">
+				</li>
+				<li class="slide">
+					<img src="assets/img/emergency_cc_1.jpg" alt="">
+				</li>
+				<li class="slide">
+					<img src="assets/img/engineering_1.jpg" alt="">
+				</li>
+				<li class="slide">
+					<img src="assets/img/financial_1.jpg" alt="">
+				</li>
+				<li class="slide">
+					<img src="assets/img/med_ent_1.jpg" alt="">
+				</li>
+			</ul>
+		</div>
+
+		<p>Basic slider with no options passed. It just works.</p>
+
+		<h5>HTML</h5>
+		<pre>
+&lt;div class="am-slider slider-1">
+	&lt;ul class="slides">
+		&lt;li class="slide">
+			&lt;img src="assets/img/defence_2.jpg" alt="">
+		&lt;/li>
+		&lt;li class="slide">
+			&lt;img src="assets/img/emergency_cc_1.jpg" alt="">
+		&lt;/li>
+		&lt;li class="slide">
+			&lt;img src="assets/img/engineering_1.jpg" alt="">
+		&lt;/li>
+		&lt;li class="slide">
+			&lt;img src="assets/img/financial_1.jpg" alt="">
+		&lt;/li>
+		&lt;li class="slide">
+			&lt;img src="assets/img/med_ent_1.jpg" alt="">
+		&lt;/li>
+	&lt;/ul>
+&lt;/div>
+		</pre>
+
+		<h5>JS</h5>
+		<pre>
+$('.slider-1').amSlider();
+		</pre>
 	</div>
 
-	<a class="am-play">play</a>
+
+
+	<!-- <a class="am-play">play</a>
 	<a class="am-pause">pause</a>
 
-	<a href="#" class="clicknext">next</a>
+	<a href="#" class="clicknext">next</a> -->
 
 
 	<script src="assets/js/dev/jquery-1.11.1.js"></script>

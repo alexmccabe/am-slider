@@ -26,6 +26,7 @@
 			self.slides = $(self.slideContainer).find(options.slideElement);
 			self.numSlides = self.slides.length; // Total number of slides
 			self.isAnimating = false; // Checking if the slider is currently animating
+			self.isPlaying = false;
 			self.current = 0; // Current slide showing
 			self.setInterval = null; // Interval between slides
 
@@ -44,6 +45,10 @@
 			this.initEvents();
 		};
 
+		/**
+		 * Initialise all interaction events
+		 * @return {n/a}
+		 */
 		this.initEvents = function() {
 			var self = this;
 
@@ -89,6 +94,10 @@
 			});
 		};
 
+		/**
+		 * Initialise the slides CSS
+		 * @return {n/a}
+		 */
 		this.initSlides = function() {
 			var self = this;
 
@@ -96,8 +105,8 @@
 			self.slides.eq(self.current).addClass('am-current');
 			$('.am-tab').eq(self.current).addClass('am-tab-current');
 
-			// Set up the slides for CSS transition usage
 			if(self.options.cssTransitions && self.transitionSupport) {
+				// Set up the slides for CSS transition usage
 				self.slides.css({
 					'opacity' : 0,
 					'visibility' : 'hidden',
@@ -110,6 +119,7 @@
 					'visibility' : 'visible'
 				});
 			} else {
+				// Set up the slides for JS animation
 				self.slides.css('display', 'none');
 				self.slides.eq(0).css('display', 'list-item');
 			}
@@ -163,7 +173,7 @@
 		this.pause = function() {
 			var self = this;
 			clearInterval(self.setInterval);
-			self.options.autoPlay = false;
+			self.isPlaying = false;
 
 			console.log('paused');
 		};
@@ -171,9 +181,9 @@
 		this.play = function() {
 			var self = this;
 
-			if(!self.options.autoPlay) {
+			if(!self.isPlaying) {
 				self.setInterval = setInterval(self.next.bind(self), self.options.slideDuration);
-				self.options.autoPlay = true;
+				self.isPlaying = true;
 
 				console.log('playing');
 			} else { console.log('already playing'); }
@@ -307,8 +317,8 @@
 	};
 }( jQuery ));
 
-
-var something = $('.am-slider').amSlider({
+$('.slider-1').amSlider();
+/*var something = $('.am-slider').amSlider({
 	autoPlay : false,
 	cssTransitions: false,
 // 	pauseOnHover : false,
@@ -319,4 +329,4 @@ var something = $('.am-slider').amSlider({
 
 $('.clicknext').click(function() {
 	something.data('amSlider').next();
-});
+});*/

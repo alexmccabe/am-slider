@@ -3,6 +3,7 @@
  * Richard Clark (http://richclarkdesign.com)
  * http://cssreset.com
  */
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono|Ubuntu:300,500,300italic,500italic|Oswald:400,700);
 /* line 6, ../_reset.scss */
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -112,41 +113,120 @@ input, select {
   vertical-align: middle;
 }
 
-/* line 1, ../_slider.scss */
+/* line 5, ../_globals.scss */
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* line 9, ../_globals.scss */
+body {
+  background-color: #f2f2f2;
+  color: #8c8c8c;
+  font-family: Ubuntu;
+  font-weight: 300;
+}
+
+/* line 16, ../_globals.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Oswald;
+  font-weight: 400;
+}
+
+/* line 21, ../_globals.scss */
+h1 {
+  font-size: 5em;
+}
+
+/* line 22, ../_globals.scss */
+h2 {
+  color: #595959;
+  font-size: 4em;
+}
+
+/* line 23, ../_globals.scss */
+h3 {
+  color: #bfbfbf;
+  font-size: 2.8em;
+}
+
+/* line 25, ../_globals.scss */
 ul {
   list-style-type: none;
 }
 
-/* line 2, ../_slider.scss */
+/* line 26, ../_globals.scss */
 a {
+  color: #595959;
   text-decoration: none;
 }
 
-/* line 3, ../_slider.scss */
-.am-slider {
-  margin: 0 auto;
-  position: relative;
-  width: 50%;
+/* line 31, ../_globals.scss */
+p {
+  margin: 1em 0;
 }
-/* line 8, ../_slider.scss */
+
+/* line 32, ../_globals.scss */
+pre {
+  margin: 0;
+  margin-bottom: 1em;
+  padding: 1em 1em 0.1em;
+}
+/* line 37, ../_globals.scss */
+pre:last-child {
+  margin-bottom: 0;
+}
+
+/* line 40, ../_globals.scss */
+pre, .code {
+  background-color: #595959;
+  color: white;
+  font-family: "Ubuntu Mono";
+  font-size: 0.9em;
+}
+
+/* line 48, ../_globals.scss */
+.slider-wrap {
+  background-color: white;
+  border: 1px solid #dedede;
+  max-width: 960px;
+  margin: 2em auto;
+  padding: 2em;
+}
+
+/* line 56, ../_globals.scss */
+.am-slider {
+  margin-top: 2em;
+}
+
+/* line 1, ../_slider.scss */
+.am-slider {
+  position: relative;
+}
+/* line 4, ../_slider.scss */
 .am-slider .slides, .am-slider .am-direction-controls, .am-slider .am-nav-controls {
   clear: both;
   margin: 0;
   padding: 0;
 }
-/* line 14, ../_slider.scss */
+/* line 10, ../_slider.scss */
 .am-slider .am-direction-controls, .am-slider .am-nav-controls {
   /* position: relative; */
   z-index: 3;
 }
-/* line 20, ../_slider.scss */
+/* line 16, ../_slider.scss */
 .am-slider .am-direction-controls li a {
-  background-color: red;
+  background-color: white;
+  display: block;
+  padding: 3em 0.2em;
   position: absolute;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
+  -webkit-transform: translateY(-50%) translate3d(0, 0, 0);
+          transform: translateY(-50%) translate3d(0, 0, 0);
+}
+/* line 24, ../_slider.scss */
+.am-slider .am-direction-controls li a:hover {
+  background-color: #f2f2f2;
 }
 /* line 27, ../_slider.scss */
 .am-slider .am-direction-controls li.am-prev a {
@@ -158,47 +238,47 @@ a {
 }
 /* line 36, ../_slider.scss */
 .am-slider .am-nav-controls {
-  bottom: 0;
-  left: 50%;
-  position: absolute;
+  bottom: 1.4em;
+  position: relative;
   text-align: center;
-  -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
 }
-/* line 43, ../_slider.scss */
+/* line 42, ../_slider.scss */
 .am-slider .am-nav-controls .am-tab {
   display: inline-block;
+}
+/* line 46, ../_slider.scss */
+.am-slider .am-nav-controls a {
   background-color: white;
-  padding: 5px;
+  margin: 0 -1px;
+  padding: 0.4em 1em;
+}
+/* line 51, ../_slider.scss */
+.am-slider .am-nav-controls a:hover {
+  background-color: #f2f2f2;
+}
+/* line 54, ../_slider.scss */
+.am-slider .am-nav-controls .am-tab-current a {
+  background-color: gray;
+  color: white;
 }
 
-/* line 53, ../_slider.scss */
-.slides:hover .slider-nav {
-  opacity: 1;
-}
-/* line 55, ../_slider.scss */
+/* line 61, ../_slider.scss */
 .slides > li {
-  /* display: none; */
   float: left;
   margin-right: -100%;
-  /* position: absolute; */
   width: 100%;
   z-index: 1;
 }
-/* line 63, ../_slider.scss */
+/* line 67, ../_slider.scss */
 .slides > li.am-current {
-  /* display: list-item; */
-  opacity: 1;
-  visibility: visible;
   z-index: 2;
 }
-/* line 71, ../_slider.scss */
+/* line 72, ../_slider.scss */
 .slides img {
   display: block;
   width: 100%;
 }
-/* line 76, ../_slider.scss */
+/* line 77, ../_slider.scss */
 .slides .slider-nav {
   left: 50%;
   opacity: 0;
@@ -212,7 +292,7 @@ a {
           transition: all 0.5s;
   z-index: 10;
 }
-/* line 86, ../_slider.scss */
+/* line 87, ../_slider.scss */
 .slides .slider-nav li {
   background-color: white;
   display: inline-block;

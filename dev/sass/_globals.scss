@@ -1,0 +1,56 @@
+$bg-color: #f2f2f2;
+
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono|Ubuntu:300,500,300italic,500italic|Oswald:400,700);
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: $bg-color;
+	color: darken($bg-color, 40%);
+	font-family: Ubuntu;
+	font-weight: 300;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: Oswald;
+	font-weight: 400;
+}
+
+h1 { font-size: 5em; }
+h2 { color: darken($bg-color, 60%); font-size: 4em; }
+h3 { color: darken($bg-color, 20%); font-size: 2.8em; }
+
+ul { list-style-type: none; }
+a {
+	color: darken($bg-color, 60%);
+	text-decoration: none;
+}
+
+p { margin: 1em 0; }
+pre {
+	margin: 0;
+	margin-bottom: 1em;
+	padding: 1em 1em 0.1em;
+
+	&:last-child { margin-bottom: 0; }
+}
+
+pre, .code {
+	background-color: darken($bg-color, 60%);
+	color: white;
+	font-family: "Ubuntu Mono";
+	font-size: 0.9em;
+}
+
+
+.slider-wrap {
+	background-color: white;
+	border: 1px solid darken($bg-color, 8%);
+	max-width: 960px;
+	margin: 2em auto;
+	padding: 2em;
+}
+
+.am-slider { margin-top: 2em; }
