@@ -17,7 +17,7 @@
 		 */
 		this.init = function(element, options) {
 			var self = this;
-			console.log(self);
+
 			self.options = $.extend({}, $.amSlider.defaultOptions, options);
 			options = self.options;
 
@@ -40,16 +40,12 @@
 			if(options.directionControls) appendDirectionControls(element, options);
 			if(options.navControls) appendNavControls(element, options);
 
-			// Add current active classes to current elements
-			self.slides.eq(self.current).addClass('am-current');
-			$('.am-tab').eq(self.current).addClass('am-tab-current');
-
+			this.initSlides();
 			this.initEvents();
 		};
 
 		this.initEvents = function() {
 			var self = this;
-			self.slides.css('transition-duration', self.options.animDuration/1000 + 's');
 
 			if(self.options.autoPlay) self.play();
 			if(self.options.pauseOnHover && self.options.autoPlay) {
@@ -93,7 +89,32 @@
 					self.play();
 				} else { console.log('already playing'); }
 			});
+		};
 
+		this.initSlides = function() {
+			var self = this;
+
+			// Add current active classes to current elements
+			self.slides.eq(self.current).addClass('am-current');
+			$('.am-tab').eq(self.current).addClass('am-tab-current');
+
+			// Set up the slides for CSS transition usage
+			if(self.options.cssTransitions && self.transitionSupport) {
+				self.slides.css({
+					'opacity' : 0,
+					'visibility' : 'hidden',
+					'transition-duration' : self.options.animDuration/1000 + 's',
+					'transition-property': 'all'
+				});
+
+				self.slides.eq(0).css({
+					'opacity' : 1,
+					'visibility' : 'visible'
+				});
+			} else {
+				self.slides.css('display', 'none');
+				self.slides.eq(0).css('display', 'list-item');
+			}
 		};
 
 		this.next = function() {
@@ -161,15 +182,26 @@
 		this.animate = function() {
 			var self = this;
 
-			if(self.options.cssTransitions && self.transitionSupport) {
-				// If CSS transitions are wanted AND the browser supports them
-				if(!self.isAnimating) {
-					console.log('current:' + self.current + 'next:'+ self.animatingTo);
-					self.slides.eq(self.current).removeClass('am-current');
-					self.slides.eq(self.animatingTo).addClass('am-current');
+			// Make damn sure that we don't animate more than once at a time
+			if(!self.isAnimating) {
+				console.log('current:' + self.current + 'next:'+ self.animatingTo);
 
-					$('.am-tab').eq(self.current).removeClass('am-tab-current');
-					$('.am-tab').eq(self.animatingTo).addClass('am-tab-current');
+				self.slides.eq(self.current).removeClass('am-current');
+				self.slides.eq(self.animatingTo).addClass('am-current');
+
+				$('.am-tab').eq(self.current).removeClass('am-tab-current');
+				$('.am-tab').eq(self.animatingTo).addClass('am-tab-current');
+
+				if(self.options.cssTransitions && self.transitionSupport) {
+					// CSS transition animation
+					self.slides.eq(self.current).css({
+						'opacity' : 0,
+						'visibility' : 'hidden'
+					});
+					self.slides.eq(self.animatingTo).css({
+						'opacity' : 1,
+						'visibility' : 'visible'
+					});
 
 					self.isAnimating = true;
 
@@ -177,18 +209,17 @@
 					$(self.slides.eq(self.current), self.slides.eq(self.animatingTo)).on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
 						self.isAnimating = false;
 					});
+
+				} else {
+					// jQuery transition animation
+
+					self.slides.eq(self.current).fadeOut(self.options.animDuration);
+					self.slides.eq(self.animatingTo).fadeIn(self.options.animDuration);
+
+					self.isAnimating = true;
+
+					setTimeout(function() { self.isAnimating = false; }, self.options.animDuration);
 				}
-			} else {
-				// We do the old school JS animations instead
-
-				// Old school way of preventing more than one animation at once
-
-				// self.slides.eq(self.current).fadeOut(self.options.animDuration);
-				self.slides.eq(self.animatingTo).fadeIn(self.options.animDuration);
-
-				self.isAnimating = true;
-
-				setTimeout(function() { self.isAnimating = false; }, self.options.animDuration);
 			}
 		};
 
@@ -278,8 +309,8 @@
 
 
 var something = $('.am-slider').amSlider({
-// 	autoPlay : false,
-	cssTransitions: true,
+	autoPlay : false,
+	cssTransitions: false,
 // 	pauseOnHover : false,
 // 	directionControls : true,
 // 	navControlsClass : '.toast'
