@@ -85,9 +85,7 @@
 
 			$('.am-play').click(function(event) {
 				event.preventDefault();
-				if(!self.options.autoPlay) {
-					self.play();
-				} else { console.log('already playing'); }
+				self.play();
 			});
 		};
 
@@ -173,10 +171,12 @@
 		this.play = function() {
 			var self = this;
 
-			self.setInterval = setInterval(self.next.bind(self), self.options.slideDuration);
-			self.options.autoPlay = true;
+			if(!self.options.autoPlay) {
+				self.setInterval = setInterval(self.next.bind(self), self.options.slideDuration);
+				self.options.autoPlay = true;
 
-			console.log('playing');
+				console.log('playing');
+			} else { console.log('already playing'); }
 		};
 
 		this.animate = function() {
