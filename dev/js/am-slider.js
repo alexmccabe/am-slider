@@ -164,7 +164,12 @@
 				self.pause();
 				self.animate();
 				self.current = self.animatingTo;
-				if(self.options.autoPlay) self.play();
+
+				if(self.options.autoPlay) {
+					if(self.options.pauseOnHover && !self.el.is(':hover')) {
+						self.play();
+					}
+				}
 			}
 		};
 
