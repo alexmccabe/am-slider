@@ -4,9 +4,7 @@
 	$.amSlider = function( element, options ) {
 		this.options = {};
 		this.el = $(element);
-
 		this.el.data('amSlider', this);
-
 
 		// Public functions
 		/**
@@ -161,9 +159,9 @@
 					console.log('next');
 					break;
 			}
-
+			self.pause();
 			if(!self.isAnimating && self.current !== slideNum && typeof self.animatingTo !== 'undefined') {
-				self.pause();
+
 				self.animate();
 				self.current = self.animatingTo;
 				if(self.options.autoPlay) self.play();
@@ -274,6 +272,11 @@
 		}
 	}
 
+	/**
+	 * Checking to see if CSS transitions are supported
+	 * @param  {array} vendors Array of browser vendors
+	 * @return {bool}         true/false based on browser support of CSS transitions
+	 */
 	function checkTransitionSupport(vendors) {
 		// We may be lucky and already have Modernizr
 		if(typeof(window.Modernizr) !== 'undefined') {
@@ -323,7 +326,7 @@
 var something = $('.slider-1').amSlider({
 	autoPlay : true,
 	cssTransitions: false,
-// 	pauseOnHover : false,
+	pauseOnHover : true,
 // 	directionControls : true,
 // 	navControlsClass : '.toast'
 });

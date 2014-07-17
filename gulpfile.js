@@ -43,6 +43,10 @@ var sources = {
 	}
 }
 
+var options = {
+	minifyVendors : true
+}
+
 // Error handling function
 var onError = function(err) {
 	gutil.beep();
@@ -97,7 +101,13 @@ gulp.task('js', function() {
 		.pipe(plugins.jshint.reporter('jshint-stylish', { verbose: true }))
 		.pipe(plugins.jshint.reporter('fail'));
 
-	gulp.src([sources.js.files[1], sources.js.files[0]])
+	if(options.minifyVendors) {
+		source = [sources.js.files[1], sources.js.files[0]]
+	} else {
+		source = sources.js.files[0]
+	}
+
+	gulp.src(source)
 		.pipe(plumber())
 		.pipe(gulp.dest(sources.js.dest + 'dev'))
 		.pipe(plugins.uglify())
