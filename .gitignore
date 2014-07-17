@@ -14,3 +14,7 @@ sandbox
 test/out-fixtures/*
 test/watch-*.txt
 gulp.1
+
+dev/js/vendor
+assets/js/dev
+!assets/dev/am-slider.js
