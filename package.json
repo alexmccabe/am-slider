@@ -17,7 +17,6 @@
     "gulp-plumber": "~0.6.3",
     "gulp-util": "~2.2.19",
     "jshint-stylish": "~0.2.0",
-    "gulp": "^3.8.6",
-    "gulp-if": "~1.2.2"
+    "gulp": "^3.8.6"
   }
 }
