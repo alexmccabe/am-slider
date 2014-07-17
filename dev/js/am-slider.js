@@ -159,9 +159,9 @@
 					console.log('next');
 					break;
 			}
-			self.pause();
-			if(!self.isAnimating && self.current !== slideNum && typeof self.animatingTo !== 'undefined') {
 
+			if(!self.isAnimating && self.current !== slideNum && typeof self.animatingTo !== 'undefined') {
+				self.pause();
 				self.animate();
 				self.current = self.animatingTo;
 				if(self.options.autoPlay) self.play();
