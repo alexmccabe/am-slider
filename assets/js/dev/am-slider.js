@@ -63,27 +63,18 @@
 
 			$('.am-prev').click(function(event) {
 				event.preventDefault();
-
-				self.pause();
-				self.prev();
-				if(options.autoPlay) { self.play(); }
+				self.slide('prev');
 			});
 
 			$('.am-next').click(function(event) {
 				event.preventDefault();
-
-				self.pause();
-				self.next();
-				if(options.autoPlay) { self.play(); }
+				self.slide('next');
 			});
 
 			$('.am-tab').click(function(event) {
 				event.preventDefault();
 				var tabIndex = $(this).index();
-
-				self.pause();
 				self.slide(tabIndex);
-				if(options.autoPlay) { self.play(); }
 			});
 
 			$('.am-pause').click(function(event) {
@@ -130,47 +121,52 @@
 			}
 		};
 
+		// Quick access functions for external use
 		this.next = function() {
 			var self = this;
-
-			if(!self.isAnimating) {
-				var next = self.current+1;
-
-				self.animatingTo = (next > self.numSlides - 1) ? 0 : next;
-				self.animate();
-
-				self.current = self.animatingTo;
-
-				console.log('next');
-			}
+			self.slide('next');
 		};
 
 		this.prev = function() {
 			var self = this;
-
-			if(!self.isAnimating) {
-				var prev = self.current-1;
-
-				self.animatingTo = (prev < 0) ? self.numSlides - 1 : prev;
-
-				self.animate();
-				self.current = self.animatingTo;
-				console.log('prev');
-			}
+			self.slide('prev');
 		};
 
 		// Animate to a particular slide. Pass in the slide number (slides start at zero)
+		// Accepts 'next' and 'prev'
 		this.slide = function(slideNum) {
 			var self = this;
 
-			if(slideNum >= 0 && slideNum <= self.numSlides - 1) {
-				if(!self.isAnimating && self.current !== slideNum) {
-					self.animatingTo = slideNum;
-					self.animate();
-					self.current = self.animatingTo;
+			switch(slideNum) {
+				case !isNaN(slideNum) && parseInt(Number(slideNum)) :
+					if(slideNum >= 0 && slideNum <= self.numSlides - 1) {
+						self.animatingTo = slideNum;
+						console.log('jumping to slide:' + self.animatingTo);
+					} else {
+						self.animatingTo = undefined;
+					}
+					break;
 
-					console.log('jumping to slide:' + self.animatingTo);
-				}
+				case 'prev' :
+					var prev = self.current-1;
+					self.animatingTo = (prev < 0) ? self.numSlides - 1 : prev;
+					console.log('prev');
+					break;
+
+				case 'next' :
+				/* falls through */
+				default :
+					var next = self.current+1;
+					self.animatingTo = (next > self.numSlides - 1) ? 0 : next;
+					console.log('next');
+					break;
+			}
+
+			if(!self.isAnimating && self.current !== slideNum && typeof self.animatingTo !== 'undefined') {
+				self.pause();
+				self.animate();
+				self.current = self.animatingTo;
+				if(self.options.autoPlay) self.play();
 			}
 		};
 
@@ -186,7 +182,7 @@
 			var self = this;
 
 			if(!self.isPlaying) {
-				self.setInterval = setInterval(self.next.bind(self), self.options.slideDuration);
+				self.setInterval = setInterval(function() { self.slide('next'); }, self.options.slideDuration);
 				self.isPlaying = true;
 
 				console.log('playing');
@@ -321,11 +317,11 @@
 	};
 }( jQuery ));
 
-$('.slider-1').amSlider({
-	autoPlay: false
-});
-/*var something = $('.am-slider').amSlider({
-	autoPlay : false,
+/*$('.slider-1').amSlider({
+	pauseOnHover: true
+});*/
+var something = $('.slider-1').amSlider({
+	autoPlay : true,
 	cssTransitions: false,
 // 	pauseOnHover : false,
 // 	directionControls : true,
@@ -334,5 +330,5 @@ $('.slider-1').amSlider({
 
 
 $('.clicknext').click(function() {
-	something.data('amSlider').next();
-});*/
+	something.data('amSlider').slide(8);
+});
