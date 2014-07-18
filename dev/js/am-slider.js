@@ -249,7 +249,12 @@
 
 	// Private functions
 
-	// Adding the prev/next buttons to the slider
+	/**
+	 * Appending the prev/next controls to the DOM
+	 * @param  {string} element The element containing the slider
+	 * @param  {object} options All the options for the slider
+	 * @return {n/a}
+	 */
 	function appendDirectionControls(element, options) {
 		if(options.directionControls === true && $('.am-direction-controls').length === 0) {
 
@@ -259,10 +264,13 @@
 		}
 	}
 
-	// Adding the control tabs to the slider
+	/**
+	 * Appending the navigation controls to the DOM
+	 * @param  {string} element The element containing the slider
+	 * @param  {object} options All the options for the slider
+	 * @return {n/a}
+	 */
 	function appendNavControls(element, options) {
-		console.log($(options.navControlsClass).length);
-
 		if(options.navControlsClass === '.am-nav-controls' || $(options.navControlsClass).length === 0) {
 			var navControlsScaffold = '<ul class="am-nav-controls">';
 			var numSlides = $(options.slideContainer).find(options.slideElement).length;
