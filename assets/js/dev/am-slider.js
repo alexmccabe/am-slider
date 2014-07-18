@@ -36,8 +36,8 @@
 			// console.log(self.transitionSupport);
 
 			// Append the extra items needed
-			if(options.directionControls) appendDirectionControls(element, options);
-			if(options.navControls) appendNavControls(element, options);
+			if(options.directionControls && self.numSlides > 1) appendDirectionControls(element, options);
+			if(options.navControls && self.numSlides > 1) appendNavControls(element, options);
 
 			this.initSlides();
 			this.initEvents();
@@ -271,7 +271,7 @@
 	 * @return {n/a}
 	 */
 	function appendNavControls(element, options) {
-		if(options.navControlsClass === '.am-nav-controls' || $(options.navControlsClass).length === 0) {
+		if((options.navControlsClass === '.am-nav-controls' && $(options.navControlsClass).length === 0) || $(options.navControlsClass).length === 0) {
 			var navControlsScaffold = '<ul class="am-nav-controls">';
 			var numSlides = $(options.slideContainer).find(options.slideElement).length;
 
@@ -338,7 +338,7 @@
 /*$('.slider-1').amSlider({
 	pauseOnHover: true
 });*/
-var something = $('.slider-1').amSlider({
+/*var something = $('.slider-1').amSlider({
 	autoPlay : true,
 	cssTransitions: false,
 	pauseOnHover : true,
@@ -349,4 +349,4 @@ var something = $('.slider-1').amSlider({
 
 $('.clicknext').click(function() {
 	something.data('amSlider').slide(8);
-});
+});*/
