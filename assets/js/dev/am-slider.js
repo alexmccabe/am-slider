@@ -261,7 +261,9 @@
 
 	// Adding the control tabs to the slider
 	function appendNavControls(element, options) {
-		if(options.navControlsClass === '.am-nav-controls' && $('.am-nav-controls').length === 0) {
+		console.log($(options.navControlsClass).length);
+
+		if(options.navControlsClass === '.am-nav-controls' || $(options.navControlsClass).length === 0) {
 			var navControlsScaffold = '<ul class="am-nav-controls">';
 			var numSlides = $(options.slideContainer).find(options.slideElement).length;
 
@@ -333,7 +335,7 @@ var something = $('.slider-1').amSlider({
 	cssTransitions: false,
 	pauseOnHover : true,
 // 	directionControls : true,
-// 	navControlsClass : '.toast'
+	// navControlsClass : '.toast'
 });
 
 
