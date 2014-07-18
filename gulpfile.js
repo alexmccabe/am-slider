@@ -44,7 +44,7 @@ var sources = {
 }
 
 var options = {
-	minifyVendors : false
+	minifyVendors : true
 }
 
 // Error handling function
