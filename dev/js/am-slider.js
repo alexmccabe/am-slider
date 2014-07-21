@@ -86,6 +86,32 @@
 				options.autoPlay = true;
 				self.play();
 			});
+
+			if(self.options.keyboard) {
+				$(document).on('keyup', function(event) {
+					var code = event.which;
+
+					switch(code) {
+						case 39:
+							self.slide('next');
+							break;
+
+						case 37:
+							self.slide('prev');
+							break;
+						case 80:
+							if(self.isPlaying) {
+								self.pause();
+							} else {
+								self.play();
+							}
+							break;
+
+						default:
+							break;
+					}
+				});
+			}
 		};
 
 		/**
@@ -326,6 +352,7 @@
 			prev: 'prev',
 			next: 'next'
 		},
+		keyboard: false,
 		navControls: true, // Navigation controls to flick through slides
 		navControlsClass: '.am-nav-controls', // Class of navigation controls container
 		pauseOnHover: false, // Pause the slider animations on hover
@@ -335,9 +362,14 @@
 	};
 }( jQuery ));
 
-/*$('.slider-1').amSlider({
-	pauseOnHover: true
-});*/
+$('.slider-1').amSlider({
+	animDuration: 2000,
+	keyboard: true,
+	navControlsClass: '.slider-nav-controls',
+	pauseOnHover: true,
+	slideDuration: 5000,
+	slideElement: '.slide'
+});
 /*var something = $('.slider-1').amSlider({
 	autoPlay : true,
 	cssTransitions: false,
