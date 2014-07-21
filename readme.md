@@ -61,7 +61,7 @@ animDuration: 1000, 					// [integer] Duration of animation between slides
 autoPlay: true,							// [boolean] Autoplay the slider on page load
 cssTransitions: true, 					// [boolean] Use CSS for the transitions
 directionControls: true, 				// [boolean] Generate prev/next controls
-directionContolsText: { 				// [object] The text showin the prev/next buttons on the slider
+directionContolsText: { 				// [object] The text showing the prev/next buttons on the slider
 	prev: 'prev',
 	next: 'next'
 },
