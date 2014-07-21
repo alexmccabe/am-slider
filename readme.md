@@ -1,4 +1,4 @@
-A simple JS slider (he says, when all it does is fade at the moment...).
+A simple jQuery slider (he says, when all it does is fade at the moment...).
 
 ###Features
 
@@ -8,6 +8,7 @@ A simple JS slider (he says, when all it does is fade at the moment...).
 + Pause the slider on hover
 + Externally accessible methods for controlling the slider
 + Custom text on next & previous controls
++ Keyboard control (left/right `arrow keys` & pause/play `p`)
 
 ###Future features
 
@@ -64,6 +65,7 @@ directionContolsText: { 				// [object] The text showin the prev/next buttons on
 	prev: 'prev',
 	next: 'next'
 },
+keyboard: false,						// [boolean] Control the slider via the keyboard
 navControls: true, 						// [boolean] Navigation controls to flick through slides
 navControlsClass: '.am-nav-controls', 	// [string] Class of navigation controls container
 pauseOnHover: false, 					// [boolean] Pause the slider animations on hover
