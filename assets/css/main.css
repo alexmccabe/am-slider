@@ -264,21 +264,19 @@ pre, .code {
 
 /* line 61, ../_slider.scss */
 .slides > li {
-  float: left;
-  margin-right: -100%;
   width: 100%;
   z-index: 1;
 }
-/* line 67, ../_slider.scss */
+/* line 65, ../_slider.scss */
 .slides > li.am-current {
   z-index: 2;
 }
-/* line 72, ../_slider.scss */
+/* line 70, ../_slider.scss */
 .slides img {
   display: block;
   width: 100%;
 }
-/* line 77, ../_slider.scss */
+/* line 75, ../_slider.scss */
 .slides .slider-nav {
   left: 50%;
   opacity: 0;
@@ -292,7 +290,7 @@ pre, .code {
           transition: all 0.5s;
   z-index: 10;
 }
-/* line 87, ../_slider.scss */
+/* line 85, ../_slider.scss */
 .slides .slider-nav li {
   background-color: white;
   display: inline-block;
