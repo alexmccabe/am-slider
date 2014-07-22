@@ -126,6 +126,8 @@
 			if(self.options.cssTransitions && self.transitionSupport) {
 				// Set up the slides for CSS transition usage
 				self.slides.css({
+					'float': 'left',
+					'margin-right': '-100%',
 					'opacity' : 0,
 					'visibility' : 'hidden',
 					'transition-duration' : self.options.animDuration/1000 + 's',
@@ -202,7 +204,7 @@
 			clearInterval(self.setInterval);
 			self.isPlaying = false;
 
-			console.log('paused');
+			// console.log('paused');
 		};
 
 		this.play = function() {
@@ -212,7 +214,7 @@
 				self.setInterval = setInterval(function() { self.slide('next'); }, self.options.slideDuration);
 				self.isPlaying = true;
 
-				console.log('playing');
+				// console.log('playing');
 			} else { console.log('already playing'); }
 		};
 
@@ -222,7 +224,7 @@
 			// Make damn sure that we don't animate more than once at a time
 			if(!self.isAnimating) {
 				self.isAnimating = true;
-				// console.log('current:' + self.current + 'next:'+ self.animatingTo);
+				console.log('current:' + self.current + 'next:'+ self.animatingTo);
 
 				self.slides.eq(self.current).removeClass('am-current');
 				self.slides.eq(self.animatingTo).addClass('am-current');
