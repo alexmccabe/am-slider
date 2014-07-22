@@ -163,7 +163,7 @@
 				case !isNaN(slideNum) && parseInt(Number(slideNum)) :
 					if(slideNum >= 0 && slideNum <= self.numSlides - 1) {
 						self.animatingTo = slideNum;
-						console.log('jumping to slide:' + self.animatingTo);
+						// console.log('jumping to slide:' + self.animatingTo);
 					} else {
 						self.animatingTo = undefined;
 					}
@@ -172,7 +172,7 @@
 				case 'prev' :
 					var prev = self.current-1;
 					self.animatingTo = (prev < 0) ? self.numSlides - 1 : prev;
-					console.log('prev');
+					// console.log('prev');
 					break;
 
 				case 'next' :
@@ -180,7 +180,7 @@
 				default :
 					var next = self.current+1;
 					self.animatingTo = (next > self.numSlides - 1) ? 0 : next;
-					console.log('next');
+					// console.log('next');
 					break;
 			}
 
@@ -221,7 +221,8 @@
 
 			// Make damn sure that we don't animate more than once at a time
 			if(!self.isAnimating) {
-				console.log('current:' + self.current + 'next:'+ self.animatingTo);
+				self.isAnimating = true;
+				// console.log('current:' + self.current + 'next:'+ self.animatingTo);
 
 				self.slides.eq(self.current).removeClass('am-current');
 				self.slides.eq(self.animatingTo).addClass('am-current');
@@ -240,11 +241,10 @@
 						'visibility' : 'visible'
 					});
 
-					self.isAnimating = true;
-
 					// Check for CSS animation completion
-					$(self.slides.eq(self.current), self.slides.eq(self.animatingTo)).on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
+					$(self.slides.eq(self.animatingTo)).on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
 						self.isAnimating = false;
+
 					});
 
 				} else {
