@@ -50,7 +50,7 @@
 		this.initEvents = function() {
 			var self = this;
 
-			if(self.options.autoPlay) self.play();
+			if(self.options.autoPlay && self.numSlides > 1) self.play();
 			if(self.options.pauseOnHover && self.options.autoPlay) {
 				self.el.hover(function() {
 					self.pause();
@@ -92,21 +92,19 @@
 					var code = event.which;
 
 					switch(code) {
-						case 39:
+						case 39: // Right arrow
 							self.slide('next');
 							break;
-
-						case 37:
+						case 37: // Left arrow
 							self.slide('prev');
 							break;
-						case 80:
+						case 80: // p
 							if(self.isPlaying) {
 								self.pause();
 							} else {
 								self.play();
 							}
 							break;
-
 						default:
 							break;
 					}
