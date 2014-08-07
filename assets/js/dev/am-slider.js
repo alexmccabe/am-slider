@@ -140,7 +140,21 @@
 				});
 			} else {
 				// Set up the slides for JS animation
-				self.slides.css('display', 'none');
+				// As we have to set the position to absolute, we have to calculate the height for the container
+				// This changes on browser resize, so update it
+				self.slideContainer.css({
+					'height': self.slides.outerHeight(),
+				});
+
+				$(window).resize(function() {
+					self.slideContainer.css({
+						'height': self.slides.outerHeight(),
+					});
+				});
+				self.slides.css({
+					'display': 'none',
+					'position': 'absolute'
+				});
 				self.slides.eq(0).css('display', 'list-item');
 			}
 		};
@@ -363,12 +377,13 @@
 }( jQuery ));
 
 $('.slider-1').amSlider({
-	animDuration: 2000,
+	cssTransitions: false
+	/*animDuration: 2000,
 	keyboard: true,
 	navControlsClass: '.slider-nav-controls',
 	pauseOnHover: true,
 	slideDuration: 5000,
-	slideElement: '.slide'
+	slideElement: '.slide'*/
 });
 /*var something = $('.slider-1').amSlider({
 	autoPlay : true,
