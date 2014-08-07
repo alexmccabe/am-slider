@@ -223,60 +223,61 @@ pre, .code {
   top: 50%;
   -webkit-transform: translateY(-50%) translate3d(0, 0, 0);
           transform: translateY(-50%) translate3d(0, 0, 0);
+  z-index: 5;
 }
-/* line 24, ../_slider.scss */
+/* line 25, ../_slider.scss */
 .am-slider .am-direction-controls li a:hover {
   background-color: #f2f2f2;
 }
-/* line 27, ../_slider.scss */
+/* line 28, ../_slider.scss */
 .am-slider .am-direction-controls li.am-prev a {
   left: 0;
 }
-/* line 31, ../_slider.scss */
+/* line 32, ../_slider.scss */
 .am-slider .am-direction-controls li.am-next a {
   right: 0;
 }
-/* line 36, ../_slider.scss */
+/* line 37, ../_slider.scss */
 .am-slider .am-nav-controls {
   bottom: 1.4em;
   position: relative;
   text-align: center;
 }
-/* line 42, ../_slider.scss */
+/* line 43, ../_slider.scss */
 .am-slider .am-nav-controls .am-tab {
   display: inline-block;
 }
-/* line 46, ../_slider.scss */
+/* line 47, ../_slider.scss */
 .am-slider .am-nav-controls a {
   background-color: white;
   margin: 0 -1px;
   padding: 0.4em 1em;
 }
-/* line 51, ../_slider.scss */
+/* line 52, ../_slider.scss */
 .am-slider .am-nav-controls a:hover {
   background-color: #f2f2f2;
 }
-/* line 54, ../_slider.scss */
+/* line 55, ../_slider.scss */
 .am-slider .am-nav-controls .am-tab-current a {
   background-color: gray;
   color: white;
 }
 
-/* line 61, ../_slider.scss */
+/* line 62, ../_slider.scss */
 .slides > li {
   width: 100%;
   z-index: 1;
 }
-/* line 65, ../_slider.scss */
+/* line 66, ../_slider.scss */
 .slides > li.am-current {
   z-index: 2;
 }
-/* line 70, ../_slider.scss */
+/* line 71, ../_slider.scss */
 .slides img {
   display: block;
   width: 100%;
 }
-/* line 75, ../_slider.scss */
+/* line 76, ../_slider.scss */
 .slides .slider-nav {
   left: 50%;
   opacity: 0;
@@ -290,7 +291,7 @@ pre, .code {
           transition: all 0.5s;
   z-index: 10;
 }
-/* line 85, ../_slider.scss */
+/* line 86, ../_slider.scss */
 .slides .slider-nav li {
   background-color: white;
   display: inline-block;
