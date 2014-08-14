@@ -229,7 +229,7 @@
 				self.isPlaying = true;
 
 				// console.log('playing');
-			} else { console.log('already playing'); }
+			} /*else { console.log('already playing'); }*/
 		};
 
 		this.animate = function() {
@@ -238,7 +238,7 @@
 			// Make damn sure that we don't animate more than once at a time
 			if(!self.isAnimating) {
 				self.isAnimating = true;
-				console.log('current:' + self.current + 'next:'+ self.animatingTo);
+				// console.log('current:' + self.current + 'next:'+ self.animatingTo);
 
 				self.slides.eq(self.current).removeClass('am-current');
 				self.slides.eq(self.animatingTo).addClass('am-current');
@@ -376,15 +376,15 @@
 	};
 }( jQuery ));
 
-$('.slider-1').amSlider({
-	cssTransitions: false
-	/*animDuration: 2000,
+/*$('.slider-1').amSlider({
+	// cssTransitions: false
+	animDuration: 2000,
 	keyboard: true,
 	navControlsClass: '.slider-nav-controls',
 	pauseOnHover: true,
 	slideDuration: 5000,
-	slideElement: '.slide'*/
-});
+	slideElement: '.slide'
+});*/
 /*var something = $('.slider-1').amSlider({
 	autoPlay : true,
 	cssTransitions: false,
