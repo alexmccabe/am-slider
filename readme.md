@@ -1,4 +1,4 @@
-A simple jQuery slider (he says, when all it does is fade at the moment...).
+A simple, responsive jQuery slider (he says, when all it does is fade at the moment...).
 
 ###Features
 
